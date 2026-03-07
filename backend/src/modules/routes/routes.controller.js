@@ -22,4 +22,3 @@ logger.info('Fetching all routes');
  }
 
 };
-
