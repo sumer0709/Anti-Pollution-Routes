@@ -1,9 +1,9 @@
-const route = require('./routes.model.js');
-
+const Route = require('./routes.model.js');
+const logger = require('../../utils/logger');
 exports.createRoute = async (req, res) => {
  logger.info('Creating a new route');
  try{
- const route = await route.create(req.body);
+ const route = await Route.create(req.body);
  res.status(201).json(route);
  }catch(err){
  logger.error('Error creating route:', err);
@@ -14,7 +14,7 @@ exports.createRoute = async (req, res) => {
 exports.getRoutes = async (req, res) => {
 logger.info('Fetching all routes');
  try {
-    const routes = await route.find().populate('userId', 'username');
+    const routes = await Route.find().populate('userId', 'username');
     res.status(200).json(routes);
  } catch (error) {
     logger.error('Error fetching routes:', error);

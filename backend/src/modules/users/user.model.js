@@ -11,5 +11,5 @@ const userSchema = new mongoose.Schema({
     notificationPreference: [String]
 },{timestamps: true});
 
-const User = mongoose.model('User',userSchema);
-module.exports = User;
+const UserRoute = mongoose.model('UserRoute',userSchema);
+module.exports = UserRoute;

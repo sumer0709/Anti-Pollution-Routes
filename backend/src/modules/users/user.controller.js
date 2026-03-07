@@ -1,9 +1,9 @@
-const User = require('./user.model');
+const UserRoute = require('./user.model');
 const logger = require('../../utils/logger');
 exports.createUser=async(req,res)=>{
     logger.info("Create User end point hit ..")
     try {
-        const user = await User.create(req.body);
+        const user = await UserRoute.create(req.body);
         res.json(user);
     } catch (error) {
         logger.error("Error creating user: ", error);
@@ -13,7 +13,7 @@ exports.createUser=async(req,res)=>{
 exports.getUsers=async(req,res)=>{
     logger.info("Get Users end point hit ..");
     try{
-        const users = await User.find();
+        const users = await UserRoute.find();
         res.json(users);
     } catch (error) {
         logger.error("Error fetching users: ", error);

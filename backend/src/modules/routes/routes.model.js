@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const routeSchema = new mongoose.Schema({
     userId:{
         type: mongoose.Schema.Types.ObjectId,
-        ref:'User'
+        ref:'UserRoute'
     },
     name : String,
     startlocation:{
