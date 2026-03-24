@@ -1,5 +1,5 @@
-const Route = require('./routes.model.js');
-const logger = require('../../utils/logger');
+const Route = require('./route.model.js');
+const logger = require('../../utils/logger.js');
 exports.createRoute = async (req, res) => {
  logger.info('Creating a new route');
  try{

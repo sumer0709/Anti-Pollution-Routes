@@ -116,7 +116,7 @@ exports.login=async(req,res)=>{
 
           return res.status(201).json({
           success: true,
-          message: 'User registered successfully',
+          message: 'User logged in successfully',
           accessToken
          });
 
@@ -133,7 +133,7 @@ exports.login=async(req,res)=>{
 exports.refreshToken=async(req,res)=>{
     logger.info("Refresh Token endpoint hit ... ");
     try {
-        const refreshToken= req.cookies;
+        const refreshToken= req.cookies.refreshToken;
 
         if(!refreshToken)
         {
@@ -174,7 +174,7 @@ exports.refreshToken=async(req,res)=>{
         });
         
        
-    } catch (error) {
+    } catch (e) {
         logger.error("Error in refresh token endpoint ..." , e);
         return res.status(500).json({
             success:false,
