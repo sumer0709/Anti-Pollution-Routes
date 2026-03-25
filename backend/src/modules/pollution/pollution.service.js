@@ -1,4 +1,4 @@
-const Route = require('../routes/routes.model');
+const Route = require('../route/route.model');
 const PollutionScore = require('./pollution.model.js');
 const {getAQI} = require('../../services/aqi.service.js');
 

@@ -1,4 +1,4 @@
-const UserRoute = require('../users/user.model.js')
+const User = require('../users/user.model.js')
 const {validateLogin , validateRegister} = require('../../validations/validations.js');
 const logger = require('../../utils/logger.js')
 const generateTokens = require('../../utils/generateToken.js');
@@ -39,7 +39,7 @@ exports.register = async(req,res)=>{
 
         const { name , email , password } = req.body;
 
-        const userExists = await UserRoute.findOne({
+        const userExists = await User.findOne({
             $or:[{email} , {name}]
         });
 
@@ -52,7 +52,7 @@ exports.register = async(req,res)=>{
             });            
         }
 
-        const newUser = new UserRoute({name , email , password});
+        const newUser = new User({name , email , password});
 
         await newUser.save();
         const {accessToken , refreshToken} = await generateTokens(newUser);
@@ -90,7 +90,7 @@ exports.login=async(req,res)=>{
         }
 
         const {email , password}= req.body;
-        const user = await UserRoute.findOne({email});
+        const user = await User.findOne({email});
 
         if(!user)
         {
@@ -153,7 +153,7 @@ exports.refreshToken=async(req,res)=>{
             });
         }
         
-        const user =  await UserRoute.findById(storedToken.user);
+        const user =  await User.findById(storedToken.user);
      if (!user) {
         logger.warn("User not found");
 

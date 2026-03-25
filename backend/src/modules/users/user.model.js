@@ -2,11 +2,13 @@ const mongoose = require('mongoose');
 const argon2 = require('argon2');
 const userSchema = new mongoose.Schema({
     name:{
-        type: String
+        type: String,
+        required: true
     },
     email:{
         type: String,
-        unique: true
+        unique: true,
+        required: true
     },
     password:{
         type:String,
@@ -33,5 +35,5 @@ userSchema.methods.comparePassword = async function (candidatePassword) {
 
 userSchema.index({ username: 'text' });
 
-const UserRoute = mongoose.model('UserRoute',userSchema);
-module.exports = UserRoute;
+const User = mongoose.model('User',userSchema);
+module.exports = User;
