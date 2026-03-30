@@ -114,7 +114,7 @@ exports.login=async(req,res)=>{
 
         setTokenCookies(res , accessToken , refreshToken);
 
-          return res.status(201).json({
+          return res.status(200).json({
           success: true,
           message: 'User logged in successfully',
           accessToken

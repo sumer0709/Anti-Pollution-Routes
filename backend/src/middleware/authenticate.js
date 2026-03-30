@@ -43,7 +43,7 @@ const authenticate = async (req, res, next) => {
     logger.warn('Invalid or expired token', error.message);
     return res.status(401).json({
       success: false,
-      message: 'Invalid or expired token.',
+      message: 'User not authenticated.',
     });
   }
 };
