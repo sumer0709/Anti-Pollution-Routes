@@ -103,3 +103,38 @@ exports.getRoutesById= async (req,res)=>{
       });    
   }
 }
+exports.deleteRoute= async(req,res)=>{
+  logger.info("Delete route end point hit..");
+  try {
+    if(!mongoose.Types.ObjectId.isValid(req.params.id)){
+       return res.status(400).json({
+        message:"Invalid Route Id",
+        success:false
+      });
+    }
+
+    const route = await Route.findOneAndDelete({ _id: req.params.id, user: req.user._id });
+    if(!route)
+    {
+     logger.warn("Route not found .. ");
+     return res.status(404).json({
+      message:"Route not found",
+      success:false
+     });
+    }
+    logger.info("Route found and deleted id", route._id);
+    return res.status(200).json({
+      message:"Route deleted sucessfully",
+      success:true
+    });
+
+  } catch (e) {
+    logger.error("Error fetching Route", e);
+
+      // Send error response
+      res.status(500).json({
+      success: false,
+      message: "Error at fetching Route",
+      }); 
+  }
+}

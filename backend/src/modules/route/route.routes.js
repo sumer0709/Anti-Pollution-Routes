@@ -7,5 +7,6 @@ const { createRouteSchema } = require('./route.validations.js');
 router.post('/', authenticate, validate(createRouteSchema), controller.createRoute);
 router.get('/', authenticate, controller.getRoutes);
 router.get('/:id', authenticate, controller.getRoutesById);
+router.delete('/:id', authenticate, controller.deleteRoute);
 
 module.exports = router;
