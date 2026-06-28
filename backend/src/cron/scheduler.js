@@ -5,7 +5,7 @@ const pollutionJob = require('./jobs/pollution.job');
 const startScheduler =() =>{
     logger.info('Starting cron scheduler..');
 
-    cron.schedule('*/15 * * * *',async () =>{
+    cron.schedule('*/2 * * * *',async () =>{
         logger.info('Cron triggered - running pollution job');
         await pollutionJob();
     });

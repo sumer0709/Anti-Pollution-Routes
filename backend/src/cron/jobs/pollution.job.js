@@ -1,5 +1,7 @@
 const Route = require('../../modules/route/route.model');
-const{calculatePollutionScore} = require('../../modules/pollution/pollution.service');
+const { getChannel } = require('../../config/rabbitmq');
+const { POLLUTION_QUEUE } = require('../../config/queue');
+const { calculatePollutionScore } = require('../../modules/pollution/pollution.service');
 const logger = require('../../utils/logger');
 
 const pollutionJob= async ()=>{
@@ -14,22 +16,26 @@ const pollutionJob= async ()=>{
             return;
         }
 
-        const results= await Promise.allSettled(
-            routes.map((routes) => calculatePollutionScore(routes._id))
-        );
+      const channel = await getChannel();
 
-        const succeeded = results.filter((r)=> r.status ==='fulfilled').length;
-
-        const failed = results.filter((r)=> r.status ==='rejected').length; 
-        
-        logger.info(`Pollution job completed -Success ${succeeded} , Failed ${failed}`);
-
-      results.forEach((result, index) => {
-      if (result.status === 'rejected') {
-        logger.error(`Route ${routes[index]._id} failed`, result.reason);
+      if (!channel)
+      {
+        logger.error("RabbitMQ channel not available. Skipping job");
+        return;
       }
-    });
 
+      await channel.assertQueue(POLLUTION_QUEUE, { durable: true });
+
+      let published = 0;
+      for(const route of routes)
+      {
+        const message = JSON.stringify({ routeId: route._id });
+        await channel.sendToQueue(POLLUTION_QUEUE, Buffer.from(message), {
+          persistent: true,
+        });
+        published++;
+      }
+      logger.info(`Pollution job completed — ${published} messages published to queue`);
     }catch(error)
     {
      logger.error('Pollution job crashed', error);

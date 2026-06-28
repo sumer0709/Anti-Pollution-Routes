@@ -405,7 +405,7 @@ Every 15 minutes:
 - [x] AQI service with Redis caching
 - [x] Pollution scoring engine (0–100 normalized)
 - [x] Cron-based background processing
-- [ ] RabbitMQ producer/consumer for async job processing
+- [x] RabbitMQ producer/consumer for async job processing
 - [ ] Route analysis endpoint (score multiple routes, return best)
 - [ ] Centralized error handling middleware
 - [ ] Rate limiting on auth and pollution endpoints
